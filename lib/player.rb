@@ -1,14 +1,17 @@
 class Player
-  def initialize (name)
+  def initialize(name)
     @name = name
     @score = 0
   end
-  def get_name
+
+  def read_name
     @name
   end
-  def get_score
+
+  def read_score
     @score
-  end  
+  end
+
   def increase_score
     @score += 1
   end
