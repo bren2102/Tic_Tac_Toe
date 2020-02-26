@@ -11,6 +11,9 @@ name1 = gets.chomp
 puts 'Player 2, enter your name: '
 name2 = gets.chomp
 game_finished = false
+player1 = Player.new(name1)
+player2 = Player.new(name2)
+
 while !game_finished
   puts "Here's the board:"
   print_board(board_array)
@@ -28,6 +31,14 @@ while !game_finished
   board_array[number] = "X" if player_turn == 1
   board_array[number] = "O" if player_turn == 2
   
+  winner = win(board_array, player_turn)
+  if winner != ""
+    print_board(board_array)
+    puts winner
+    puts "Do you want to play again [y/n]"
+    play_again = gets.chomp
+    break unless play_again == "y"
+  end
   if player_turn == 1
     player_turn = 2
   else

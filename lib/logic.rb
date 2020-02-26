@@ -27,4 +27,20 @@ def win(board_array,player_turn)
     cel = "X"
   else
     cel = "O"
+  end
+
+  win_case_1 = cel == board_array[0] && cel == board_array[1] && cel == board_array[2]
+  win_case_2 = cel == board_array[3] && cel == board_array[4] && cel == board_array[5] 
+  win_case_3 = cel == board_array[6] && cel == board_array[7] && cel == board_array[8] 
+  win_case_4 = cel == board_array[0] && cel == board_array[3] && cel == board_array[6] 
+  win_case_5 = cel == board_array[1] && cel == board_array[4] && cel == board_array[7] 
+  win_case_6 = cel == board_array[2] && cel == board_array[3] && cel == board_array[8] 
+  win_case_7 = cel == board_array[0] && cel == board_array[4] && cel == board_array[8] 
+  win_case_8 = cel == board_array[6] && cel == board_array[4] && cel == board_array[2]
+
+  if win_case_1 || win_case_2 || win_case_3 || win_case_4 || win_case_5 || win_case_6 || win_case_7 || win_case_8
+    return "Player #{player_turn} Wins!"
+  else
+    return ""
+  end
 end
