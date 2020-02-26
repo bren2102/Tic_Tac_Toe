@@ -20,7 +20,6 @@ end
 
 def validate_input_board_cell(board_array, _player_turn, number)
   invalid_input = number.negative? || number > 8
-  puts number
   return 'Please only write a number from 1 to 9' if invalid_input
 
   return 'Only play in an empty cell' unless board_array[number] == ' '

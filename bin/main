@@ -53,7 +53,7 @@ until game_finished
   if winner != ''
     print_board(board_array)
     puts winner
-    if output != 'Tie'
+    if winner != 'Tie'
       if player_turn == 1
         player1.increase_score
       else
