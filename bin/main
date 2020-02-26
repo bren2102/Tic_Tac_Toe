@@ -1,15 +1,6 @@
 #!/usr/bin/env ruby
-def print_board(array)
-puts "7  |8  |9  "
-puts " #{array[7]} | #{array[8]} | #{array[9]} "
-puts "___|___|___"
-puts "4  |5  |6  "
-puts " #{array[4]} | #{array[5]} | #{array[6]} "
-puts "___|___|___"
-puts "1  |2  |3  "
-puts " #{array[1]} | #{array[2]} | #{array[3]} "
-puts "   |   |   "
-end
+load 'lib/logic.rb'
+
 board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 player_turn = 1
 
@@ -24,20 +15,18 @@ while !game_finished
   puts "Here's the board:"
   print_board(board_array)
   puts "Player #{player_turn}, select which cell you want to fill by writing it's cell number"
-  invalid_input = true
-  while invalid_input
+
+  output = " "
+  while output != ""
     number = gets.chomp
-    number = number.to_i
-    invalid_input = number < 1 || number > 9
-    puts 'Please only write a number from 1 to 9' if invalid_input
-    if board_array[number] == " "
-      board_array[number] = "X" if player_turn == 1
-      board_array[number] = "O" if player_turn == 2
-    else
-      puts "Only play in an empty cell"
-      invalid_input = true
-    end
+    number = number.to_i - 1
+    output = validate_input(board_array,player_turn,number)
+
+    puts output
   end
+  
+  board_array[number] = "X" if player_turn == 1
+  board_array[number] = "O" if player_turn == 2
   
   if player_turn == 1
     player_turn = 2
