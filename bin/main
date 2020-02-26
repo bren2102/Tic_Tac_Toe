@@ -9,9 +9,22 @@ puts 'Welcome to our tic-tac-toe game, to start, enter your names'
 
 puts 'Player 1, enter your name: '
 name1 = gets.chomp
+valid = validate_user_name(name1)
+while !valid
+  puts "Your name shouldn't contain any spaces and can't be empty"
+  name1 = gets.chomp
+  valid = validate_user_name(name1)
+end
 puts 'Player 2, enter your name: '
 name2 = gets.chomp
+valid = validate_user_name(name2)
+while !valid
+  puts "Your name shouldn't contain any spaces and can't be empty"
+  name2 = gets.chomp
+  valid = validate_user_name(name2)
+end
 game_finished = false
+
 player1 = Player.new(name1)
 player2 = Player.new(name2)
 
@@ -57,10 +70,12 @@ while !game_finished
     end
     break unless play_again == "y"
 
-    if player_turn == 1
-      player1.increase_score()
-    else
-      player2.increase_score()
+    unless output == "Tie"
+      if player_turn == 1
+        player1.increase_score()
+      else
+        player2.increase_score()
+      end
     end
     board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
   end
