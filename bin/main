@@ -44,10 +44,8 @@ until game_finished
     number = gets.chomp
     number = number.to_i - 1
     output = validate_input_board_cell(board_array, player_turn, number)
-
     puts output
   end
-
   board_array[number] = 'X' if player_turn == 1
   board_array[number] = 'O' if player_turn == 2
 
