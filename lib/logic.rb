@@ -20,9 +20,9 @@ end
 
 def validate_input_board_cell(board_array, _player_turn, number)
   invalid_input = number.negative? || number > 8
-  return 'Please only write a number from 1 to 9' if invalid_input
+  return 'Please only write a number from 1 to 9'.red if invalid_input
 
-  return 'Only play in an empty cell' unless board_array[number] == ' '
+  return 'Only play in an empty cell'.red unless board_array[number] == ' '
 
   ''
 end
@@ -38,9 +38,9 @@ end
 
 def win(board_array, player_turn, _player_name)
   cel = if player_turn == 1
-          'X'
+          'X'.green
         else
-          'O'
+          'O'.blue
         end
 
   win_one = cel == board_array[0] && cel == board_array[1] && cel == board_array[2]

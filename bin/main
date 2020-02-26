@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 load 'lib/logic.rb'
 load 'lib/player.rb'
+require 'colorize'
 
 board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 player_turn = 1
@@ -11,7 +12,7 @@ puts 'Player 1, enter your name: '
 name1 = gets.chomp
 valid = validate_user_name(name1)
 until valid
-  puts "Your name shouldn't contain any spaces and can't be empty"
+  puts "Your name shouldn't contain any spaces and can't be empty".red
   name1 = gets.chomp
   valid = validate_user_name(name1)
 end
@@ -19,14 +20,14 @@ puts 'Player 2, enter your name: '
 name2 = gets.chomp
 valid = validate_user_name(name2)
 until valid
-  puts "Your name shouldn't contain any spaces and can't be empty"
+  puts "Your name shouldn't contain any spaces and can't be empty".red
   name2 = gets.chomp
   valid = validate_user_name(name2)
 end
 game_finished = false
 
-player1 = Player.new(name1)
-player2 = Player.new(name2)
+player1 = Player.new(name1.green)
+player2 = Player.new(name2.blue)
 
 until game_finished
   puts "Here's the board:"
@@ -46,8 +47,8 @@ until game_finished
     output = validate_input_board_cell(board_array, player_turn, number)
     puts output
   end
-  board_array[number] = 'X' if player_turn == 1
-  board_array[number] = 'O' if player_turn == 2
+  board_array[number] = 'X'.green if player_turn == 1
+  board_array[number] = 'O'.blue if player_turn == 2
 
   winner = win(board_array, player_turn, current_player_name)
   if winner != ''
@@ -69,7 +70,7 @@ until game_finished
     until valid_input
       valid_input = validate_input_play_again(play_again)
       unless valid_input
-        puts "Please only write 'y' or 'n'"
+        puts "Please only write 'y' or 'n'".red
         play_again = gets.chomp
       end
     end
