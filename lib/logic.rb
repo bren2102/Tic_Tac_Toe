@@ -10,7 +10,7 @@ def print_board(array)
   puts "   |   |   "
 end
 
-def validate_input(board_array,player_turn,number)
+def validate_input_board_cell(board_array,player_turn,number)
   invalid_input = true
     invalid_input = number < 0 || number > 8
     return 'Please only write a number from 1 to 9' if invalid_input
@@ -22,7 +22,16 @@ def validate_input(board_array,player_turn,number)
     end
 end
 
-def win(board_array,player_turn)
+def validate_input_play_again(input)
+  input.downcase!
+  if input != "y" && input != "n"
+    false
+  else 
+    true
+  end
+end
+
+def win(board_array,player_turn,player_name)
   if player_turn == 1
     cel = "X"
   else
@@ -39,7 +48,7 @@ def win(board_array,player_turn)
   win_case_8 = cel == board_array[6] && cel == board_array[4] && cel == board_array[2]
 
   if win_case_1 || win_case_2 || win_case_3 || win_case_4 || win_case_5 || win_case_6 || win_case_7 || win_case_8
-    return "Player #{player_turn} Wins!"
+    return "#{player_turn} Wins!"
   else
     return ""
   end

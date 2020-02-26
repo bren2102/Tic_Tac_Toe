@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 load 'lib/logic.rb'
+load 'lib/player.rb'
 
 board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 player_turn = 1
@@ -17,31 +18,56 @@ player2 = Player.new(name2)
 while !game_finished
   puts "Here's the board:"
   print_board(board_array)
-  puts "Player #{player_turn}, select which cell you want to fill by writing it's cell number"
+  if player_turn == 1
+    puts "#{player1.get_name}, select which cell you want to fill by writing it's cell number"
+    current_player_name = player1.get_name
+  else
+    puts "#{player2.get_name}, select which cell you want to fill by writing it's cell number"
+    current_player_name = player2.get_name
+  end
 
   output = " "
   while output != ""
     number = gets.chomp
     number = number.to_i - 1
-    output = validate_input(board_array,player_turn,number)
+    output = validate_input_board_cell(board_array,player_turn,number)
 
     puts output
   end
   
   board_array[number] = "X" if player_turn == 1
   board_array[number] = "O" if player_turn == 2
-  
-  winner = win(board_array, player_turn)
+
+  winner = win(board_array, player_turn, current_player_name)
   if winner != ""
     print_board(board_array)
     puts winner
+    puts "Score:"
+    puts "#{player1.get_name}: #{player1.get_score}"
+    puts "#{player2.get_name}: #{player2.get_score}"
     puts "Do you want to play again [y/n]"
     play_again = gets.chomp
+    valid_input = false
+    while !valid_input
+      valid_input = validate_input_play_again(play_again)
+      if !valid_input
+        puts "Please only write 'y' or 'n'"
+        play_again = gets.chomp
+      end
+    end
     break unless play_again == "y"
+
+    if player_turn == 1
+      player1.increase_score()
+    else
+      player2.increase_score()
+    end
+    board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
   end
   if player_turn == 1
     player_turn = 2
   else
     player_turn = 1
   end
+
 end
