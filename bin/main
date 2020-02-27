@@ -44,6 +44,6 @@ until game_finished
   # This line will break the game if the board is full and mark a tie.
   break if board_array.all? { |value| value != ' ' }
 
-  #This line changes who's turn it is
+  #This line changes who's turn it is after finishing the cycle
   player_turn = player_turn == 1 ? 2 : 1
 end
