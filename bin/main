@@ -35,7 +35,7 @@ valid = logic.validate_user_name(name2)
 until valid
   puts "Your name shouldn't contain any spaces and can't be empty"
   name2 = gets.chomp
-  valid =logic.validate_user_name(name2)
+  valid = logic.validate_user_name(name2)
 end
 game_finished = false
 
@@ -90,6 +90,6 @@ until game_finished
 
     board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
   end
-  player_turn = player_turn == 1? 2 : 1
+  player_turn = player_turn == 1 ? 2 : 1
 
 end
