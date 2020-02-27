@@ -1,6 +1,15 @@
 #!/usr/bin/env ruby
-load 'lib/logic.rb'
-
+def print_board(array)
+  puts '7  |8  |9  '
+  puts " #{array[6]} | #{array[7]} | #{array[8]} "
+  puts '___|___|___'
+  puts '4  |5  |6  '
+  puts " #{array[3]} | #{array[4]} | #{array[5]} "
+  puts '___|___|___'
+  puts '1  |2  |3  '
+  puts " #{array[0]} | #{array[1]} | #{array[2]} "
+  puts '   |   |   '
+end
 board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 player_turn = 1
 
@@ -10,27 +19,30 @@ puts 'Player 1, enter your name: '
 name1 = gets.chomp
 puts 'Player 2, enter your name: '
 name2 = gets.chomp
+puts "Hello #{name1} and #{name2}. Let's start the game."
 game_finished = false
-while !game_finished
+until game_finished
   puts "Here's the board:"
   print_board(board_array)
   puts "Player #{player_turn}, select which cell you want to fill by writing it's cell number"
-
-  output = " "
-  while output != ""
+  invalid_input = true
+  while invalid_input
     number = gets.chomp
-    number = number.to_i - 1
-    output = validate_input(board_array,player_turn,number)
+    number = number.to_i
+    invalid_input = number < 1 || number > 10
+    puts 'Please only write a number from 1 to 9' if invalid_input
+    if board_array[number - 1] == ' '
+      board_array[number - 1] = player_turn == 1 ? 'X' : 'O'
+    else
+      puts 'Only play in an empty cell'
+      invalid_input = true
+    end
+  end
+  # There should be a line here checking if
+  # the last move was a winning move and stopping the game, telling the user who won.
+  break if board_array.all? { |value| value != ' ' }
 
-    puts output
-  end
-  
-  board_array[number] = "X" if player_turn == 1
-  board_array[number] = "O" if player_turn == 2
-  
-  if player_turn == 1
-    player_turn = 2
-  else
-    player_turn = 1
-  end
+  # This line will break the game if the board is full and mark a tie.
+  player_turn = player_turn == 1 ? 2 : 1
+
 end
