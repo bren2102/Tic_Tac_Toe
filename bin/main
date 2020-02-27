@@ -25,12 +25,7 @@ while !game_finished
     puts output
   end
   
-  board_array[number] = "X" if player_turn == 1
-  board_array[number] = "O" if player_turn == 2
+  board_array[number] = player_turn == 1 ? 'X' : 'Y'
   
-  if player_turn == 1
-    player_turn = 2
-  else
-    player_turn = 1
-  end
+  player_turn = player_turn == 1 ? 2 : 1
 end
