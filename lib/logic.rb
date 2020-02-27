@@ -6,16 +6,16 @@ class GameLogic
       player_name != ''
     end
   end
-  
+
   def validate_input_board_cell(board_array, _player_turn, number)
     invalid_input = number.negative? || number > 8
     return 'Please only write a number from 1 to 9' if invalid_input
-  
+
     return 'Only play in an empty cell' unless board_array[number] == ' '
-  
+
     ''
   end
-  
+
   def validate_input_play_again(input)
     input.downcase!
     if input != 'y' && input != 'n'
@@ -24,14 +24,14 @@ class GameLogic
       true
     end
   end
-  
+
   def win(board_array, player_turn, _player_name)
     cel = if player_turn == 1
             'X'
           else
             'O'
           end
-  
+
     win_one = cel == board_array[0] && cel == board_array[1] && cel == board_array[2]
     win_two = cel == board_array[3] && cel == board_array[4] && cel == board_array[5]
     win_tree = cel == board_array[6] && cel == board_array[7] && cel == board_array[8]
@@ -40,7 +40,7 @@ class GameLogic
     win_six = cel == board_array[2] && cel == board_array[5] && cel == board_array[8]
     win_seven = cel == board_array[0] && cel == board_array[4] && cel == board_array[8]
     win_eight = cel == board_array[6] && cel == board_array[4] && cel == board_array[2]
-  
+
     if win_one || win_two || win_tree || win_four || win_five || win_six || win_seven || win_eight
       "#{player_turn} Wins!"
     elsif board_array.all? { |value| value != ' ' }
@@ -48,5 +48,5 @@ class GameLogic
     else
       ''
     end
-  end  
+  end
 end
