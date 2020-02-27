@@ -40,9 +40,10 @@ until game_finished
   end
   # There should be a line here checking if
   # the last move was a winning move and stopping the game, telling the user who won.
-  break if board_array.all? { |value| value != ' ' }
 
   # This line will break the game if the board is full and mark a tie.
-  player_turn = player_turn == 1 ? 2 : 1
+  break if board_array.all? { |value| value != ' ' }
 
+  #This line changes who's turn it is
+  player_turn = player_turn == 1 ? 2 : 1
 end
