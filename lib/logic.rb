@@ -1,3 +1,5 @@
+require 'colorize'
+
 class GameLogic
   def validate_user_name(player_name)
     if player_name.include? ' '
@@ -5,10 +7,6 @@ class GameLogic
     else
       player_name != ''
     end
-  end
-
-  def test(variable)
-    variable
   end
 
   def validate_input_board_cell(board_array, _player_turn, number)
