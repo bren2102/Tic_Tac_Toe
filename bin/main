@@ -1,2 +1,141 @@
 #!/usr/bin/env ruby
-puts "Hello World"
+
+def validate_user_name(player_name)
+  if player_name.include? ' '
+    false
+  else
+    player_name != ''
+  end
+end
+
+def validate_input_board_cell(board_array, _player_turn, number)
+  invalid_input = number.negative? || number > 8
+  return 'Please only write a number from 1 to 9' if invalid_input
+
+  return 'Only play in an empty cell' unless board_array[number] == ' '
+
+  ''
+end
+
+def validate_input_play_again(input)
+  input.downcase!
+  if input != 'y' && input != 'n'
+    false
+  else
+    true
+  end
+end
+
+def win(board_array, player_turn, _player_name)
+  cel = if player_turn == 1
+          'X'
+        else
+          'O'
+        end
+
+  win_one = cel == board_array[0] && cel == board_array[1] && cel == board_array[2]
+  win_two = cel == board_array[3] && cel == board_array[4] && cel == board_array[5]
+  win_tree = cel == board_array[6] && cel == board_array[7] && cel == board_array[8]
+  win_four = cel == board_array[0] && cel == board_array[3] && cel == board_array[6]
+  win_five = cel == board_array[1] && cel == board_array[4] && cel == board_array[7]
+  win_six = cel == board_array[2] && cel == board_array[5] && cel == board_array[8]
+  win_seven = cel == board_array[0] && cel == board_array[4] && cel == board_array[8]
+  win_eight = cel == board_array[6] && cel == board_array[4] && cel == board_array[2]
+
+  if win_one || win_two || win_tree || win_four || win_five || win_six || win_seven || win_eight
+    "#{player_turn} Wins!"
+  elsif board_array.all? { |value| value != ' ' }
+    'Tie'
+  else
+    ''
+  end
+end
+
+def print_board(array)
+  puts '7  |8  |9  '
+  puts " #{array[6]} | #{array[7]} | #{array[8]} "
+  puts '___|___|___'
+  puts '4  |5  |6  '
+  puts " #{array[3]} | #{array[4]} | #{array[5]} "
+  puts '___|___|___'
+  puts '1  |2  |3  '
+  puts " #{array[0]} | #{array[1]} | #{array[2]} "
+  puts '   |   |   '
+end
+
+board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+player_turn = 1
+score1 = 0
+score2 = 0
+
+puts 'Welcome to our tic-tac-toe game, to start, enter your names'
+
+puts 'Player 1, enter your name: '
+name1 = gets.chomp
+valid = validate_user_name(name1)
+until valid
+  puts "Your name shouldn't contain any spaces and can't be empty"
+  name1 = gets.chomp
+  valid = validate_user_name(name1)
+end
+puts 'Player 2, enter your name: '
+name2 = gets.chomp
+valid = validate_user_name(name2)
+until valid
+  puts "Your name shouldn't contain any spaces and can't be empty"
+  name2 = gets.chomp
+  valid = validate_user_name(name2)
+end
+game_finished = false
+
+until game_finished
+  puts "Here's the board:"
+  print_board(board_array)
+  if player_turn == 1
+    puts "#{name1}, select which cell you want to fill by writing it's cell number"
+    current_player_name = name1
+  else
+    puts "#{name2}, select which cell you want to fill by writing it's cell number"
+    current_player_name = name2
+  end
+
+  output = ' '
+  while output != ''
+    number = gets.chomp
+    number = number.to_i - 1
+    output = validate_input_board_cell(board_array, player_turn, number)
+    puts output
+  end
+  board_array[number] = player_turn == 1 ? 'X' : 'O'
+
+  winner = win(board_array, player_turn, current_player_name)
+  if winner != ''
+    print_board(board_array)
+    puts winner
+    if winner != 'Tie'
+      if player_turn == 1
+        score1 += 1
+      else
+        score2 += 1
+      end
+    end
+    puts 'Score:'
+    puts "#{name1}: #{score1}"
+    puts "#{name2}: #{score2}"
+    puts 'Do you want to play again [y/n]'
+    play_again = gets.chomp
+    valid_input = false
+    until valid_input
+      valid_input = validate_input_play_again(play_again)
+      unless valid_input
+        puts "Please only write 'y' or 'n'"
+        play_again = gets.chomp
+      end
+    end
+    break unless play_again == 'y'
+
+    board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+  end
+  player_turn = player_turn == 1 ? 2 : 1
+
+end
