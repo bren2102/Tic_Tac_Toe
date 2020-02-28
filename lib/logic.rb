@@ -7,6 +7,10 @@ class GameLogic
     end
   end
 
+  def test(variable)
+    variable
+  end
+
   def validate_input_board_cell(board_array, _player_turn, number)
     invalid_input = number.negative? || number > 8
     return 'Please only write a number from 1 to 9'.red if invalid_input
