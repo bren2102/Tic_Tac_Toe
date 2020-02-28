@@ -31,6 +31,8 @@ end
 
 board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 player_turn = 1
+score1 = 0
+score2 = 0
 
 puts 'Welcome to our tic-tac-toe game, to start, enter your names'
 
