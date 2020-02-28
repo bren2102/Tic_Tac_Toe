@@ -3,6 +3,32 @@ load 'lib/logic.rb'
 load 'lib/player.rb'
 require 'colorize'
 
+logic = GameLogic.new
+
+def print_board(array)
+  puts '7  |8  |9  '
+  puts " #{array[6]} | #{array[7]} | #{array[8]} "
+  puts '___|___|___'
+  puts '4  |5  |6  '
+  puts " #{array[3]} | #{array[4]} | #{array[5]} "
+  puts '___|___|___'
+  puts '1  |2  |3  '
+  puts " #{array[0]} | #{array[1]} | #{array[2]} "
+  puts '   |   |   '
+end
+
+def validate_play_again_input(play_again)
+  logic = GameLogic.new
+  valid_input = false
+  until valid_input
+    valid_input = logic.validate_input_play_again(play_again)
+    unless valid_input
+      puts "Please only write 'y' or 'n'".red
+      play_again = gets.chomp
+    end
+  end
+  play_again
+end
 board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 player_turn = 1
 
@@ -10,19 +36,19 @@ puts 'Welcome to our tic-tac-toe game, to start, enter your names'
 
 puts 'Player 1, enter your name: '
 name1 = gets.chomp
-valid = validate_user_name(name1)
+valid = logic.validate_user_name(name1)
 until valid
   puts "Your name shouldn't contain any spaces and can't be empty".red
   name1 = gets.chomp
-  valid = validate_user_name(name1)
+  valid = logic.validate_user_name(name1)
 end
 puts 'Player 2, enter your name: '
 name2 = gets.chomp
-valid = validate_user_name(name2)
+valid = logic.validate_user_name(name2)
 until valid
   puts "Your name shouldn't contain any spaces and can't be empty".red
   name2 = gets.chomp
-  valid = validate_user_name(name2)
+  valid = logic.validate_user_name(name2)
 end
 game_finished = false
 
@@ -44,44 +70,28 @@ until game_finished
   while output != ''
     number = gets.chomp
     number = number.to_i - 1
-    output = validate_input_board_cell(board_array, player_turn, number)
+    output = logic.validate_input_board_cell(board_array, player_turn, number)
     puts output
   end
-  board_array[number] = 'X'.green if player_turn == 1
-  board_array[number] = 'O'.blue if player_turn == 2
+  board_array[number] = player_turn == 1 ? 'X'.green : 'O'.blue
 
-  winner = win(board_array, player_turn, current_player_name)
+  winner = logic.win(board_array, player_turn, current_player_name)
+  if winner != '' && winner != 'Tie'
+    player_turn == 1 ? player1.increase_score : player2.increase_score
+  end
   if winner != ''
     print_board(board_array)
     puts winner
-    if winner != 'Tie'
-      if player_turn == 1
-        player1.increase_score
-      else
-        player2.increase_score
-      end
-    end
     puts 'Score:'
     puts "#{player1.read_name}: #{player1.read_score}"
     puts "#{player2.read_name}: #{player2.read_score}"
     puts 'Do you want to play again [y/n]'
     play_again = gets.chomp
-    valid_input = false
-    until valid_input
-      valid_input = validate_input_play_again(play_again)
-      unless valid_input
-        puts "Please only write 'y' or 'n'".red
-        play_again = gets.chomp
-      end
-    end
+    play_again = validate_play_again_input(play_again)
     break unless play_again == 'y'
 
     board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
   end
-  player_turn = if player_turn == 1
-                  2
-                else
-                  1
-                end
+  player_turn = player_turn == 1 ? 2 : 1
 
 end
