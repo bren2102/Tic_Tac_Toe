@@ -9,9 +9,9 @@ class GameLogic
 
   def validate_input_board_cell(board_array, _player_turn, number)
     invalid_input = number.negative? || number > 8
-    return 'Please only write a number from 1 to 9' if invalid_input
+    return 'Please only write a number from 1 to 9'.red if invalid_input
 
-    return 'Only play in an empty cell' unless board_array[number] == ' '
+    return 'Only play in an empty cell'.red unless board_array[number] == ' '
 
     ''
   end
@@ -67,7 +67,7 @@ class GameLogic
   end
 
   def win(board_array, player_turn, player_name)
-    cel = player_turn == 1 ? 'X' : 'O'
+    cel = player_turn == 1 ? 'X'.green : 'O'.blue
 
     if check_all_wins(board_array, cel)
       "#{player_name} Wins!"
