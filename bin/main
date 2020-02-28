@@ -31,6 +31,8 @@ def validate_play_again_input(play_again)
 end
 board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 player_turn = 1
+score1 = 0
+score2 = 0
 
 puts 'Welcome to our tic-tac-toe game, to start, enter your names'
 
@@ -75,6 +77,7 @@ until game_finished
   end
   board_array[number] = player_turn == 1 ? 'X'.green : 'O'.blue
 
+
   winner = logic.win(board_array, player_turn, current_player_name)
   if winner != '' && winner != 'Tie'
     player_turn == 1 ? player1.increase_score : player2.increase_score
@@ -88,6 +91,7 @@ until game_finished
     puts 'Do you want to play again [y/n]'
     play_again = gets.chomp
     play_again = validate_play_again_input(play_again)
+
     break unless play_again == 'y'
 
     board_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
