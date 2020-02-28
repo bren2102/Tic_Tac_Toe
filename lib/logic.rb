@@ -25,25 +25,53 @@ class GameLogic
     end
   end
 
-  def win(board_array, player_turn, _player_name)
-    cel = if player_turn == 1
-            'X'
-          else
-            'O'
-          end
+  def check_tie(board_array)
+    board_array.all? { |value| value != ' ' }
+  end
 
-    win_one = cel == board_array[0] && cel == board_array[1] && cel == board_array[2]
-    win_two = cel == board_array[3] && cel == board_array[4] && cel == board_array[5]
-    win_tree = cel == board_array[6] && cel == board_array[7] && cel == board_array[8]
-    win_four = cel == board_array[0] && cel == board_array[3] && cel == board_array[6]
-    win_five = cel == board_array[1] && cel == board_array[4] && cel == board_array[7]
-    win_six = cel == board_array[2] && cel == board_array[5] && cel == board_array[8]
-    win_seven = cel == board_array[0] && cel == board_array[4] && cel == board_array[8]
-    win_eight = cel == board_array[6] && cel == board_array[4] && cel == board_array[2]
+  def check_win_one(board_array, cel)
+    win_condition = []
+    win_condition.push(cel == board_array[0] && cel == board_array[1] && cel == board_array[2])
+    win_condition.push(cel == board_array[3] && cel == board_array[4] && cel == board_array[5])
+    win_condition.any? { |value| value == true }
+  end
 
-    if win_one || win_two || win_tree || win_four || win_five || win_six || win_seven || win_eight
-      "#{player_turn} Wins!"
-    elsif board_array.all? { |value| value != ' ' }
+  def check_win_two(board_array, cel)
+    win_condition = []
+    win_condition.push(cel == board_array[6] && cel == board_array[7] && cel == board_array[8])
+    win_condition.push(cel == board_array[0] && cel == board_array[3] && cel == board_array[6])
+    win_condition.any? { |value| value == true }
+  end
+
+  def check_win_three(board_array, cel)
+    win_condition = []
+    win_condition.push(cel == board_array[1] && cel == board_array[4] && cel == board_array[7])
+    win_condition.push(cel == board_array[2] && cel == board_array[5] && cel == board_array[8])
+    win_condition.any? { |value| value == true }
+  end
+
+  def check_win_four(board_array, cel)
+    win_condition = []
+    win_condition.push(cel == board_array[0] && cel == board_array[4] && cel == board_array[8])
+    win_condition.push(cel == board_array[6] && cel == board_array[4] && cel == board_array[2])
+    win_condition.any? { |value| value == true }
+  end
+
+  def check_all_wins(board_array, cel)
+    win_condition = []
+    win_condition.push(check_win_one(board_array, cel))
+    win_condition.push(check_win_two(board_array, cel))
+    win_condition.push(check_win_three(board_array, cel))
+    win_condition.push(check_win_four(board_array, cel))
+    win_condition.any? { |value| value == true }
+  end
+
+  def win(board_array, player_turn, player_name)
+    cel = player_turn == 1 ? 'X' : 'O'
+
+    if check_all_wins(board_array, cel)
+      "#{player_name} Wins!"
+    elsif check_tie(board_array)
       'Tie'
     else
       ''
