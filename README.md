@@ -22,7 +22,7 @@ The purpose of this project is to build a tic-tac-toe game on the command line w
 👤 **Miguel Dubois**
 
 - Github: [@MiguelDP4](https://github.com/MiguelDP4)
-- Twitter: [@twitterhandle](https://twitter.com/Mike_DP4)
+- Twitter: [@Mike_DP4](https://twitter.com/Mike_DP4)
 
 👤 **Brenda Yucra**
 
