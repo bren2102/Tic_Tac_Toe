@@ -1,3 +1,5 @@
+require 'colorize'
+
 class GameLogic
   def validate_user_name(player_name)
     if player_name.include? ' '
